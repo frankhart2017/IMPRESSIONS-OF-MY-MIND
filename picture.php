@@ -25,6 +25,45 @@
 
 	}
 
+	if(isset($_POST['like'])) {
+
+		$query = "SELECT * FROM `likes` WHERE `pid` = '".mysqli_real_escape_string($link, $_GET['id'])."'";
+
+		$result = mysqli_query($link, $query);
+
+		if(mysqli_num_rows($result) == 0) {
+
+			$query = "INSERT INTO `likes`(`pid`, `liked`) VALUES('".mysqli_real_escape_string($link, $_GET['id'])."', '".
+			mysqli_real_escape_string($link, 1)."')";
+
+			mysqli_query($link, $query);
+
+		} else if(mysqli_num_rows($result) > 0) {
+
+			$row1 = mysqli_fetch_array($result);
+
+			$likes = $row1['liked'] + 1;
+
+			$query = "UPDATE `likes` SET `liked` = '".$likes."'";
+
+			mysqli_query($link, $query);
+
+		}
+
+	}
+
+	$like = 0;
+
+	$query = "SELECT * FROM `likes` WHERE `pid` = '".mysqli_real_escape_string($link, $_GET['id'])."'";
+
+	if(mysqli_num_rows(mysqli_query($link, $query)) > 0) {
+
+		$row2 = mysqli_fetch_array(mysqli_query($link, $query));
+
+		$likes = $row2['liked'];
+
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -173,6 +212,19 @@
 
 		} 
 
+		#like {
+
+			border: 2px solid blue;
+			border-radius: 10px;
+
+		}
+
+		#like:hover {
+
+			box-shadow: 10px 10px 5px #888888;
+
+		}
+
 		@media screen and (max-width: 480px) {
 
 			#one_img {
@@ -232,8 +284,17 @@
 	echo '<p>Location: <strong>'.$row['location'].'</strong>';
 	echo '<br>Camera: <strong>'.$row['camera'].'</strong>';
 	echo '<br>Mode: <strong>'.$row['mode'].'</strong>';
-	echo '<br>Date and Time: <strong>'.$row['date'].' '.$row['time'].'</strong></p>';
-	echo '<p><input type="text" placeholder="Enter your name" name="name">';
+	echo '<br>Date and Time: <strong>'.$row['date'].' '.$row['time'].'</strong><br>';
+	echo '<form method="post">';
+	echo '<button id="like" name="like"><img src="img/like.png" height="40" width="40">&nbsp;&nbsp;<span style="color: blue; font-weight: 500;">LIKE';
+	if($likes > 0) {
+
+		echo ': '.$likes;
+
+	}
+	echo '</span></button></p>';
+	echo '</form>';
+	echo '<br><p><input type="text" placeholder="Enter your name" name="name">';
 	echo '<br><textarea placeholder="Enter your comment" name="comment" style="margin-top: 10px;"></textarea>';
 	echo '<br><input type="submit" name="submit" value="Submit" id="submit"></p>';
 

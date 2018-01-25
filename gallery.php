@@ -60,6 +60,12 @@
 
 		}
 
+		.gal_img:hover {
+
+			box-shadow: 10px 10px 5px #888888;
+
+		}
+
 		#mobile {
 
 			display: none;
@@ -170,7 +176,7 @@
 <div class="gallery" style='text-align: center;'>
     <?php
 
-        $query = "SELECT * FROM `pictures` ORDER BY utime DESC";
+        $query = "SELECT * FROM `pictures` ORDER BY id DESC";
 
         $num = mysqli_num_rows(mysqli_query($link, $query));
 

@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     $link = mysqli_connect("shareddb1d.hosting.stackcp.net","mypics-31370ce6","qVk8rbpex/XZ","mypics-31370ce6");
 
     if(isset($_POST['submit'])) {

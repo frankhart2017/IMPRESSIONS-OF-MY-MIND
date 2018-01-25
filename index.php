@@ -31,6 +31,13 @@ This is a system generated mail. Do not reply.
 
 	}
 
+	$pictures = Array("IMG_20171013_223548_763.jpg","IMG_20171014_093628_670.jpg","IMG_20171013_223432_851.jpg","IMG_20171013_223359_534.jpg","IMG_20171013_223016_822.jpg"
+	,"IMG_20171013_222901_409.jpg","IMG_20171013_222253_056.jpg","IMG_20171013_221652_803.jpg","IMG_20171013_221926_044.jpg","IMG_20171013_222012_101.jpg");
+
+	$random = rand(0,9);
+
+	$picture = "uploads/".$pictures[$random];
+
 ?>
 
 <!DOCTYPE html>
@@ -131,6 +138,15 @@ This is a system generated mail. Do not reply.
 
 		}
 
+        #hits {
+
+            border-radius: 10px;
+            width: 5%;
+            text-align: center;
+            border: 1px solid black
+
+        }
+
 		@media screen and (max-width: 480px) {
 
 			#fb {
@@ -177,6 +193,12 @@ This is a system generated mail. Do not reply.
 
 			}
 
+            #hits {
+
+                width: 25%;
+
+            }
+
 		}
 
 		.submit {
@@ -199,6 +221,7 @@ This is a system generated mail. Do not reply.
 	</style>
 
 </head>
+<iframe src="counter.php" style="display: none;"></iframe>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 <!-- Navigation -->
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -232,7 +255,7 @@ This is a system generated mail. Do not reply.
 <!-- /.container -->
 </nav>
 <!-- Intro Header -->
-<header class="intro">
+<header class="intro" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url(<?php echo $picture; ?>); background-repeat: no-repeat; background-size: cover;">
 <div class="intro-body">
 	<div class="container">
 		<div class="row">
@@ -326,8 +349,21 @@ This is a system generated mail. Do not reply.
 		</div>
 	</div>
 </div>
+<?php
 
+    if(file_exists('count_file.txt')) {
+
+        $fil = fopen('count_file.txt',r);
+        $dat = fread($fil, filesize('count_file.txt'));
+        echo '<p style="text-align: center; margin-bottom: 20px;">Number of hits: <input id="hits" value='.$dat.' disabled></p>';
+        fclose($fil);
+
+    }
+
+?>
 </section>
+
+
 
 <!-- Footer -->
 <footer>
